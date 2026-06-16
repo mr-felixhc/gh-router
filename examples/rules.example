@@ -1,0 +1,26 @@
+# gh-router rules — the most specific match against $PWD wins.
+#
+# Format:   <path-glob>        <gh-config-dir>
+#
+# Among all patterns that match $PWD, the longest one wins, so the order of
+# lines here does not matter. A leading ~/ and the token $HOME are expanded.
+# Lines starting with # are comments. Use "default" (or "-") as the config-dir
+# to force gh's default account (handy to carve an exception out of a broader
+# rule).
+#
+# ---------------------------------------------------------------------------
+# Example: a "work" account for everything under ~/work, your default account
+# (gh's normal config) everywhere else.
+#
+# Set the work account up once with:
+#     GH_CONFIG_DIR=$HOME/.config/gh-work gh auth login
+
+$HOME/work        $HOME/.config/gh-work
+$HOME/work/*      $HOME/.config/gh-work
+
+# A client that lives inside ~/work but uses a different account:
+# $HOME/work/acme       $HOME/.config/gh-acme
+# $HOME/work/acme/*     $HOME/.config/gh-acme
+
+# Force the default account for one subtree even if a broader rule matched:
+# $HOME/work/personal-fork    default
